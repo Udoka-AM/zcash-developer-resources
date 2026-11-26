@@ -2,14 +2,18 @@
 
 > **An opinionated, engineering-first guide to building private applications, wallets, and zero-knowledge infrastructure on Zcash.**
 
-This repository curates verified documentation, Rust/TypeScript/Mobile SDKs, zero-knowledge proving libraries (Halo 2), node & indexer infrastructure, threshold signature tools (FROST), and grant pathways for developers building on Zcash.
+On this repository, I curated verified documentation, Rust/TypeScript/Mobile SDKs, zero-knowledge proving libraries (Halo 2), node & indexer infrastructure, threshold signature tools (FROST), starter code, and grant pathways for developers building on Zcash.
 
 Unlike general community wikis, this index prioritizes **production-ready, actively maintained tooling**—highlighting the ecosystem's transition from legacy C++ infrastructure (`zcashd`) to the modern modular Rust stack (`Zebra` + `Zaino` + `Zallet` + `librustzcash`).
+
+- **New to Zcash's Rust transition?** Start with the [Modern vs. Legacy Architecture Matrix](./ARCHITECTURE-MATRIX.md).
+- **Ready to write code?** Jump straight to [Starter Code: WebZjs & `librustzcash`](./STARTER-CODE.md) for Unified Address (`u1...`) derivation and browser Wasm setup.
 
 ---
 
 ## Table of Contents
 
+- [Quickstart Guides (Architecture & Code)](#quickstart-guides-architecture--code)
 - [How Zcash Works (Architecture & Cryptography)](#how-zcash-works-architecture--cryptography)
 - [Core Specifications & ZIPs](#core-specifications--zips)
 - [Modern vs. Legacy Stack (Start Here)](#modern-vs-legacy-stack-start-here)
@@ -23,6 +27,13 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 - [Grants, Funding & Bounties](#grants-funding--bounties)
 - [Communities & Working Groups](#communities--working-groups)
 - [Contributing](#contributing)
+
+---
+
+## Quickstart Guides (Architecture & Code)
+
+- [Modern vs. Legacy Architecture Matrix](./ARCHITECTURE-MATRIX.md) - Side-by-side comparison of Zcash's modular Rust production stack (`Zebra`, `Zaino`, `Zallet`) versus legacy C++ tooling (`zcashd`).
+- [Starter Code: WebZjs & `librustzcash`](./STARTER-CODE.md) - Working TypeScript (browser Wasm + Cross-Origin Isolation headers) and Rust examples for deriving ZIP-316 Unified Addresses (`u1...`).
 
 ---
 
