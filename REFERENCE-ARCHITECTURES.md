@@ -10,7 +10,7 @@ This guide reverse-engineers two canonical references:
 
 ## Part 1: Reverse-Engineering Zodl's Production Wallet Architecture
 
-Zodl ([`zodl-inc/zodl-ios`](https://github.com/zodl-inc) & [`zodl-inc/zodl-android`](https://github.com/zodl-inc/zodl-android)) demonstrates how a modern Zcash client bridges native mobile UIs with Rust cryptography and network-level privacy:
+Zodl ([`zodl-inc/zodl-ios`](https://github.com/zodl-inc/zodl-ios) & [`zodl-inc/zodl-android`](https://github.com/zodl-inc/zodl-android)) demonstrates how a modern Zcash client bridges native mobile UIs with Rust cryptography and network-level privacy:
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -39,8 +39,8 @@ Zodl ([`zodl-inc/zodl-ios`](https://github.com/zodl-inc) & [`zodl-inc/zodl-andro
 ### Key Production Design Decisions in Zodl
 1. **Orchard-First Shielded Default:** Zodl prioritizes Orchard shielded pools and Unified Addresses (`u1...`) by default rather than treating shielding as an optional secondary mode.
 2. **Local SQLite Note Commitment Tree (`zcash_client_sqlite`):** Mobile devices cannot hold full blockchain state. Zodl persists compact block headers, witness merkle paths, and spent nullifiers in an encrypted local SQLite database via `librustzcash` FFI bindings, allowing instant spend proof generation without querying a server for balance state.
-3. **Network-Layer Privacy via Oblivious HTTP (OHTTP):** In v3.20.0+, ZODL introduced OHTTP-backed wallet servers. Client gRPC requests are encrypted to the gateway key and routed through an oblivious relay—ensuring the relay sees the user's IP (but not the request) while the Zcash wallet server sees the request (but not the user's IP).
-4. **Threat-Model-Driven Key Isolation:** As documented in [`zodl-project/wallet_threat_model.md`](https://github.com/Electric-Coin-Company/zashi/blob/main/wallet_threat_model.md), spending keys remain locked inside hardware-backed mobile enclaves while viewing keys drive background compact-block trial decryption.
+3. **Network-Layer Privacy via Oblivious HTTP (OHTTP):** In Android v3.20.0+, ZODL introduced OHTTP-backed wallet servers. Client gRPC requests are encrypted to the gateway key and routed through an oblivious relay—ensuring the relay sees the user's IP (but not the request) while the Zcash wallet server sees the request (but not the user's IP).
+4. **Threat-Model-Driven Key Isolation:** As documented in [`zodl-project/wallet_threat_model.md`](https://github.com/zodl-inc/zodl-project/blob/main/wallet_threat_model.md), spending keys remain locked inside hardware-backed mobile enclaves while viewing keys drive background compact-block trial decryption.
 
 ---
 

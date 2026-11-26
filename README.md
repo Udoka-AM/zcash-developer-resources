@@ -74,7 +74,7 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 | Layer | Modern Production Stack (Recommended) | Legacy Stack (Maintenance / Deprecation) |
 | :--- | :--- | :--- |
 | **Consensus Node** | [Zebra](https://github.com/ZcashFoundation/zebra) (Rust) | [zcashd](https://github.com/zcash/zcash) (C++) |
-| **Wallet Backend** | [Zallet](https://github.com/zcash/wallet) / [librustzcash](https://github.com/zcash/librustzcash) | `zcashd` built-in wallet |
+| **Wallet Backend** | [Zallet](https://github.com/zcash/zallet) / [librustzcash](https://github.com/zcash/librustzcash) | `zcashd` built-in wallet |
 | **Light Client Indexer** | [Zaino](https://github.com/zingolabs/zaino) (Rust) | [lightwalletd](https://github.com/zcash/lightwalletd) (Go) |
 | **Browser / Web SDK** | [WebZjs](https://github.com/ChainSafe/WebZjs) (Wasm + TypeScript) | Custom RPC wrappers |
 | **Multi-Sig / Custody** | [FROST](https://github.com/ZcashFoundation/frost) (Threshold Schnorr) | Transparent P2SH multisig |
@@ -91,7 +91,7 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 - [zingolabs/zaino](https://github.com/zingolabs/zaino) - High-performance Rust blockchain indexer replacing legacy `lightwalletd` infrastructure.
 - [zcash/zcash](https://github.com/zcash/zcash) - Original C++ consensus node and protocol reference implementation.
 - [zcash/lightwalletd](https://github.com/zcash/lightwalletd) - Go backend gRPC service providing bandwidth-efficient compact blocks to mobile/light wallets.
-- [ShieldedLabs/zebra-crosslink](https://github.com/ShieldedLabs) - Hybrid Proof-of-Work / Proof-of-Stake (Crosslink) protocol R&D and Zebra prototype.
+- [ShieldedLabs/zebra-crosslink](https://github.com/ShieldedLabs/zebra-crosslink) - Hybrid Proof-of-Work / Proof-of-Stake (Crosslink) protocol R&D and Zebra prototype.
 - [QED-it/zcash_tx_tool](https://github.com/QED-it/zcash_tx_tool) - Transaction generation and testing utility supporting v5/v6 transactions and Zcash Shielded Assets (ZSAs).
 
 ---
@@ -104,11 +104,11 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 
 ### Rust Wallet & Application APIs
 - [zingolabs/zingolib](https://github.com/zingolabs/zingolib) - Full-featured Rust wallet library and CLI test harness exposing shielded sync, memos, and Unified Address management.
-- [zingolabs/zingolib-crosslink](https://github.com/zingolabs) - Experimental fork of `zingolib` built for testing Crosslink hybrid consensus features.
+- [zingolabs/zingolib-crosslink](https://github.com/zingolabs/zingolib-crosslink) - Experimental fork of `zingolib` built for testing Crosslink hybrid consensus features.
 
 ### Mobile SDKs (iOS & Android)
-- [zcash/zcash-swift-wallet-sdk](https://github.com/zcash/zcash-swift-wallet-sdk) - Native Swift light-client SDK for iOS wallets backed by `librustzcash` FFI bindings.
-- [zcash/zcash-android-wallet-sdk](https://github.com/zcash/zcash-android-wallet-sdk) - Kotlin/Java light-client SDK for Android (note: check NU7 compatibility roadmap before new deployments).
+- [zodl-inc/zodl-swift-wallet-sdk](https://github.com/zodl-inc/zodl-swift-wallet-sdk) - Native Swift light-client SDK for iOS wallets backed by `librustzcash` FFI bindings (formerly `zcash/zcash-swift-wallet-sdk`).
+- [zodl-inc/zodl-android-wallet-sdk](https://github.com/zodl-inc/zodl-android-wallet-sdk) - Kotlin/Java light-client SDK for Android wallets backed by `librustzcash` FFI bindings (formerly `zcash/zcash-android-wallet-sdk`).
 
 ---
 
@@ -122,9 +122,9 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 - [Lightwalletd Configuration Guide](https://github.com/gesker/lightwalletd_config) - Step-by-step setup guide for pairing `lightwalletd` with a node on mainnet and testnet.
 
 ### Managed RPC Providers
-- [Tatum Zcash RPC](https://openchainbench.com/benchmarks) - High-availability Zcash RPC gateway with free-tier developer endpoints.
-- [NOWNodes Zcash API](https://chainstack.com/learn/compare/best-zcash-rpc-providers/) - Managed Zcash mainnet JSON-RPC, Blockbook REST API, and WebSocket endpoints.
-- [GetBlock Zcash Nodes](https://chainstack.com/learn/compare/best-zcash-rpc-providers/) - Dedicated and shared JSON-RPC node access for Zcash mainnet and testnet.
+- [Tatum Zcash RPC](https://tatum.io/chain/zcash) - High-availability Zcash RPC gateway with free-tier developer endpoints.
+- [NOWNodes Zcash API](https://nownodes.io/nodes/zcash-zec) - Managed Zcash mainnet JSON-RPC, Blockbook REST API, and WebSocket endpoints.
+- [GetBlock Zcash Nodes](https://getblock.io/nodes/zec/) - Dedicated and shared JSON-RPC node access for Zcash mainnet and testnet.
 
 ---
 
@@ -132,7 +132,7 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 
 *Zcash's cryptographic primitives are used across the broader ZK ecosystem—build circuits or threshold signing flows directly with them.*
 
-- [The Halo 2 Book](https://zcash.github.io/halo2/user/simple-example.html) - Official developer book on writing arithmetic circuits, custom gates, and lookup arguments in `halo2`.
+- [The Halo 2 Book](https://zcash.github.io/halo2/) - Official developer book on writing arithmetic circuits, custom gates, and lookup arguments in `halo2`.
 - [halo2_gadgets](https://github.com/zcash/halo2/blob/main/halo2_gadgets/README.md) - Reusable circuit gadgets including Poseidon hash, Sinsemilla, ECC operations, and SHA-256.
 - [ZcashFoundation/frost](https://github.com/ZcashFoundation/frost) - Rust implementation of Flexible Round-Optimised Schnorr Threshold (FROST) signatures for decentralized multi-party custody.
 - [ZcashFoundation/frost-tools](https://github.com/ZcashFoundation/frost-tools) - CLI and signing utilities for constructing and signing Zcash transactions with external FROST threshold signatures.
