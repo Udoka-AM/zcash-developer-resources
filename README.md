@@ -27,9 +27,9 @@ Unlike general community wikis, this index prioritizes **production-ready, activ
 - [Grants, Funding & Bounties](#grants-funding--bounties)
 - [Communities & Working Groups](#communities--working-groups)
 - [Contributing](#contributing)
-- [Local Devnet: Zebra + Zaino](./LOCAL-DEVNET.md) - Copy-paste Docker Compose setup and regtest RPC commands for running a local Rust full node and indexer.
-- [Privacy Engineering Checklist](./PRIVACY-CHECKLIST.md) - Production audit checklist covering OHTTP network privacy, cross-pool linking, memo padding, and viewing key scoping.
-- [Reference Architectures & Patterns](./REFERENCE-ARCHITECTURES.md) - Reverse-engineered breakdown of Zodl's mobile wallet stack and Mark Henderson's Applied Zcash patterns.
+- [Local Devnet: Zebra + Zaino](./LOCAL-DEVNET.md) 
+- [Privacy Engineering Checklist](./PRIVACY-CHECKLIST.md) 
+- [Reference Architectures & Patterns](./REFERENCE-ARCHITECTURES.md)
 
 ---
 
