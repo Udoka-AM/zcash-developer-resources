@@ -9,8 +9,13 @@ Drop-in examples for connecting to Zcash and deriving **ZIP-316 Unified Addresse
 [ChainSafe/WebZjs](https://github.com/ChainSafe/WebZjs) compiles `librustzcash` into WebAssembly and executes shielded trial decryption across browser WebWorkers so the UI stays responsive.
 
 ### Installation
+`@chainsafe/webzjs-keys` is on npm. `@chainsafe/webzjs-wallet` is not published to npm yet, so build it from source (needs Rust, [`just`](https://github.com/casey/just), `wasm-pack`, and clang 17+):
+
 ```bash
-npm install @chainsafe/webzjs-wallet @chainsafe/webzjs-keys
+npm install @chainsafe/webzjs-keys
+
+git clone https://github.com/ChainSafe/WebZjs.git
+cd WebZjs && just build   # writes the wasm packages into ./packages
 ```
 
 ### `wallet-quickstart.ts`
@@ -28,18 +33,27 @@ async function setupZcashBrowserWallet() {
 
   // 2. Connect to a gRPC-web proxy for lightwalletd / Zaino
   // Note: Browser environments require a gRPC-web proxy (not a raw HTTP/2 lightwalletd URL)
-  const GRPC_WEB_PROXY_URL = "[https://zcash-mainnet.chainsafe.dev](https://zcash-mainnet.chainsafe.dev)";
+  const GRPC_WEB_PROXY_URL = "https://zcash-mainnet.chainsafe.dev";
   const NETWORK = "main"; // "main" or "test"
-  const MIN_CONFIRMATIONS = 3;
+  const MIN_CONFIRMATIONS_TRUSTED = 3;
+  const MIN_CONFIRMATIONS_UNTRUSTED = 3;
 
-  const wallet = new WebWallet(NETWORK, GRPC_WEB_PROXY_URL, MIN_CONFIRMATIONS);
+  // Parameters: network, proxy URL, trusted confs, untrusted confs, serialized db (optional)
+  const wallet = new WebWallet(
+    NETWORK,
+    GRPC_WEB_PROXY_URL,
+    MIN_CONFIRMATIONS_TRUSTED,
+    MIN_CONFIRMATIONS_UNTRUSTED,
+    null
+  );
 
   // 3. Generate a 24-word BIP-39 mnemonic (or pass an existing seed phrase)
   const seedPhrase = generate_seed_phrase();
   const accountIndex = 0;
 
-  // Setting a birthday height skips scanning blocks created before this wallet existed
-  const birthdayHeight = 2_720_000;
+  // Setting a birthday height skips scanning blocks created before this wallet existed.
+  // For a brand-new seed, the current chain tip is the birthday.
+  const birthdayHeight = Number(await wallet.get_latest_block());
 
   const accountId = await wallet.create_account(
     "primary-account",
@@ -113,23 +127,18 @@ For CLI tools, mobile FFI bridges, or server-side infrastructure, use `zcash_key
 [package]
 name = "zcash-ua-starter"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-zcash_keys = { version = "0.7", features = ["orchard", "sapling", "transparent-inputs"] }
-zcash_protocol = "0.5"
-zip32 = "0.1"
-rand_core = { version = "0.6", features = ["getrandom"] }
+zcash_keys = { version = "0.17", features = ["orchard", "sapling", "transparent-inputs"] }
+zcash_protocol = "0.11"
+zip32 = "0.3"
+getrandom = { version = "0.3", features = ["std"] }
 ```
 
 ### `src/main.rs`
 ```rust
-use rand_core::{OsRng, RngCore};
-use zcash_keys::{
-    address::UnifiedAddress,
-    encoding::AddressCodec,
-    keys::{UnifiedAddressRequest, UnifiedSpendingKey},
-};
+use zcash_keys::keys::{UnifiedAddressRequest, UnifiedSpendingKey};
 use zcash_protocol::consensus::Network;
 use zip32::AccountId;
 
@@ -139,19 +148,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // 2. Generate 64 bytes of cryptographic entropy (in production, derive from BIP-39 mnemonic)
     let mut seed = [0u8; 64];
-    OsRng.fill_bytes(&mut seed);
+    getrandom::fill(&mut seed)?;
 
     // 3. Derive the ZIP-32 Unified Spending Key (USK) for Account 0
     // Bundles Orchard, Sapling, and Transparent spending keys
     let account_id = AccountId::try_from(0)?;
-    let usk = UnifiedSpendingKey::from_seed(&network, &seed, account_id)?;
+    let usk = UnifiedSpendingKey::from_seed(&network, &seed, account_id)
+        .map_err(|e| format!("{e:?}"))?;
 
     // 4. Downgrade to a Unified Full Viewing Key (UFVK)
     // Safe to share with watch-only indexers (Zaino / lightwalletd) without exposing spend authority
     let ufvk = usk.to_unified_full_viewing_key();
 
     // 5. Derive the default ZIP-316 Unified Address containing Orchard + Sapling + Transparent receivers
-    let (unified_address, diversifier_index): (UnifiedAddress, _) =
+    let (unified_address, diversifier_index) =
         ufvk.default_address(UnifiedAddressRequest::AllAvailableKeys)?;
 
     // 6. Encode as a human-readable Bech32m string (starts with `u1` on mainnet, `utest1` on testnet)
